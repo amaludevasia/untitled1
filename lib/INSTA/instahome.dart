@@ -1,3 +1,5 @@
+import 'dart:js';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -14,6 +16,15 @@ class InstaState extends State {
   String mainProfilePic = "https://media.socastsrm.com/wordpress/wp-content/blogs.dir/2166/files/2019/03/maxresdefault-4.jpg";
   @override
   Widget build(BuildContext context) {
+    List<String> images = [
+      "assets/images/palm.jpg",
+      "assets/images/tree.jpg",
+      "assets/images/moss.jpg",
+      "assets/images/colourtree.jpg",
+      "assets/images/img.jpeg",
+      "assets/images/img_1.jpg",
+
+    ];
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -149,6 +160,13 @@ class InstaState extends State {
                     )
                   ],
                 ),
+                Divider(
+                  height: 5,
+                  thickness: 1,
+                  indent: 30,
+                  endIndent: 30,
+                ),
+                Padding(padding: EdgeInsets.only(top: 15)),
                 Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                   children: [
@@ -191,26 +209,60 @@ class InstaState extends State {
                 ),
               ],
             ),
-        return Flexible(
-    child: new Container(
-    child: new GridView.builder(
-    itemCount: 16,
-    gridDelegate:
-        SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
-    itemBuilder: (BuildContext context, int index) {
-    return new Container(
-    margin: EdgeInsets.all(2.0),
-    color: Colors.grey,
-    child: new Image.asset("assets/images/pic$index.png"),
-    );
-    }),
-    ));
-  }
-          ],  )
-          ,
+            Padding(
+              padding: EdgeInsets.only(top: 15, left: .5),
+            ),
+            Container(
+              alignment: Alignment.centerLeft,
+              padding: EdgeInsets.only(top: 10),
+                child: SingleChildScrollView(
+                  child: Container(
+                    width: 450,
+                    height: 85,
+                    child: GridView.builder(
+                      itemCount: images.length,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 4,
+                        crossAxisSpacing: 0,
+                        mainAxisSpacing: 1,
+                      ),
+                      itemBuilder: (BuildContext context, int index) {
+                        return Image.asset(images[index]);
+                      },
+                    ),
+                  ),
+                ),
+
+            ),
+          ],
+        ),
         ),
       );
   }
 }
 
+Widget _instagrid(){
+  var orientation;
+  return GridView.count(
 
+
+      crossAxisCount: orientation == Orientation.portrait ? 3 : 5,
+      children: List.generate(10, (index) {
+    return Center(
+      child: Column(
+        children: <Widget>[
+          Image.network(
+            'https://picsum.photos/500/500?random=$index',
+            width: 100,
+            height: 100,
+          ),
+          Text(
+            'Text $index',
+          //  style: Theme.textTheme.headline5,
+          ),
+        ],
+      ),
+    );
+  }),
+  );
+}
